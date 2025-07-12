@@ -480,13 +480,9 @@
             }
         }
 
-        /* ページ切り替え用のスタイル */
-        .page {
-            display: none;
-        }
-
-        .page.active {
-            display: block;
+        /* セクション間のスペース調整 */
+        .main-section {
+            scroll-margin-top: 100px; /* ナビバーの高さ分のオフセット */
         }
     </style>
 </head>
@@ -494,48 +490,45 @@
     <!-- ナビゲーション -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
-            <a href="#" class="logo" onclick="showPage('home')">真心のおもてなし</a>
+            <a href="#home" class="logo">真心のおもてなし</a>
             <ul class="nav-menu">
-                <li><a href="#" onclick="showPage('home')">HOME</a></li>
-                <li><a href="#" onclick="showPage('experiences')">EXPERIENCES</a></li>
-                <li><a href="#" onclick="showPage('sincerity')">OUR SINCERITY</a></li>
-                <li><a href="#" onclick="showPage('inquiry')">INQUIRY</a></li>
+                <li><a href="#home">HOME</a></li>
+                <li><a href="#experiences">EXPERIENCES</a></li>
+                <li><a href="#sincerity">OUR SINCERITY</a></li>
+                <li><a href="#inquiry">INQUIRY</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- ホームページ -->
-    <div id="home" class="page active">
-        <section class="hero">
-            <div class="hero-overlay"></div>
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="hero-title-line1">あなたのための</span>
-                    <span class="hero-title-line2">真心を込めたおもてなし</span>
-                </h1>
-                <p class="hero-subtitle">Your Personal Journey, Crafted with Sincerity</p>
-                <p class="hero-description">
-                    私たちは、画一的なツアーでは満足できない『あなた』のためだけに存在する、プライベート・ツアーの専門家です。<br>
-                    お決まりのルートはありません。旅の始まりは、いつもあなたの心の中にあります。
-                    <br><br>
-                    <div style="display: flex; justify-content: center; margin: 30px 0;">
-                        <iframe width="560" height="315" src="https://www.youtube.com/embed/WLIv7HnZ_fE?si=SJtHAqNLxVT02vUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                    </div>
-                </p>
-                <a href="#" class="cta-button" onclick="showPage('inquiry')">あなたの夢をお聞かせください</a>
-            </div>
-        </section>
-    </div>
+    <!-- ホームセクション -->
+    <section id="home" class="hero main-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="hero-title-line1">あなたのための</span>
+                <span class="hero-title-line2">真心を込めたおもてなし</span>
+            </h1>
+            <p class="hero-subtitle">Your Personal Journey, Crafted with Sincerity</p>
+            <p class="hero-description">
+                私たちは、画一的なツアーでは満足できない『あなた』のためだけに存在する、プライベート・ツアーの専門家です。<br>
+                お決まりのルートはありません。旅の始まりは、いつもあなたの心の中にあります。
+                <br><br>
+                <div style="display: flex; justify-content: center; margin: 30px 0;">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/WLIv7HnZ_fE?si=SJtHAqNLxVT02vUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="max-width: 100%; height: auto;"></iframe>
+                </div>
+            </p>
+            <a href="#inquiry" class="cta-button">あなたの夢をお聞かせください</a>
+        </div>
+    </section>
 
-    <!-- エクスペリエンスページ -->
-    <div id="experiences" class="page">
-        <section class="section">
-            <h2 class="section-title">EXPERIENCES</h2>
-            <div class="experiences-intro">
-                ここに掲載するのは、過去にお客様のためだけに創り上げた旅の、ほんの一例です。<br>
-                あなたの旅は、あなたの興味や夢をお聞かせいただくことから始まります。<br>
-                誰一人として同じ旅はありません。
-            </div>
+    <!-- エクスペリエンスセクション -->
+    <section id="experiences" class="section main-section">
+        <h2 class="section-title">EXPERIENCES</h2>
+        <div class="experiences-intro">
+            ここに掲載するのは、過去にお客様のためだけに創り上げた旅の、ほんの一例です。<br>
+            あなたの旅は、あなたの興味や夢をお聞かせいただくことから始まります。<br>
+            誰一人として同じ旅はありません。
+        </div>
             
             <div class="experiences-grid">
                 <div class="experience-card">
@@ -580,9 +573,8 @@
         </section>
     </div>
 
-    <!-- 真心ページ -->
-    <div id="sincerity" class="page">
-        <section class="section sincerity">
+    <!-- 真心セクション -->
+    <section id="sincerity" class="section sincerity main-section">
             <h2 class="section-title">OUR SINCERITY</h2>
             <div class="sincerity-content">
                 <div class="sincerity-intro">
@@ -620,11 +612,9 @@
                 </div>
             </div>
         </section>
-    </div>
 
-    <!-- お問い合わせページ -->
-    <div id="inquiry" class="page">
-        <section class="section inquiry">
+    <!-- お問い合わせセクション -->
+    <section id="inquiry" class="section inquiry main-section">
             <h2 class="section-title">INQUIRY</h2>
             <div class="inquiry-intro">
                 『あなたのための真心を込めたおもてなし』の第一歩は、あなたの声を聞くことから始まります。<br>
@@ -664,22 +654,8 @@
                 <p>3. あなただけの特別なプランを真心を込めてご提案いたします</p>
             </div>
         </section>
-    </div>
 
     <script>
-        // ページ切り替え機能
-        function showPage(pageId) {
-            // すべてのページを非表示
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
-            
-            // 指定されたページを表示
-            document.getElementById(pageId).classList.add('active');
-            
-            // ページトップにスクロール
-            window.scrollTo(0, 0);
-        }
-
         // スクロール時のナビバー効果
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
@@ -711,7 +687,7 @@
                     console.log('Experience selected:', title);
                     
                     // より具体的な問い合わせページへの誘導
-                    showPage('inquiry');
+                    document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth' });
                     
                     // フォームに選択した体験を自動入力
                     const interestsField = document.getElementById('interests');
