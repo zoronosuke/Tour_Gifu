@@ -24,17 +24,18 @@
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             padding: 20px 0;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .navbar.scrolled {
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.99);
             padding: 15px 0;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.15);
         }
 
         .nav-container {
@@ -90,7 +91,7 @@
 
         /* ヒーローセクション */
         .hero {
-            height: 100vh;
+            height: 140vh; /* 高さを増やしてコンテンツがかぶらないように */
             position: relative;
             display: flex;
             align-items: center;
@@ -98,6 +99,7 @@
             text-align: center;
             overflow: hidden;
             background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+            padding-top: 20px; /* ナビバーの高さ分のパディングを追加 */
         }
 
         .hero-overlay {
@@ -120,6 +122,12 @@
             color: white;
             max-width: 900px;
             padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(70vh - 100px); /* 高さを調整して余裕を持たせる */
+            margin-top: 20px; /* より大きなマージンで下に配置 */
         }
 
         .hero-title {
@@ -156,14 +164,13 @@
         .hero-description {
             font-size: 1.1rem;
             line-height: 1.9;
-            margin-bottom: 45px;
+            margin-bottom: 30px;
             opacity: 0;
             transform: translateY(30px);
             animation: fadeInUp 1.8s ease 1.5s forwards;
             max-width: 700px;
             margin-left: auto;
             margin-right: auto;
-            margin-bottom: 45px;
         }
 
         .cta-button {
@@ -178,7 +185,8 @@
             transition: all 0.4s ease;
             opacity: 0;
             transform: translateY(30px);
-            animation: fadeInUp 1.8s ease 2s forwards;
+            animation: fadeInUp 1.8s ease 2.3s forwards;
+            margin-top: 20px;
         }
 
         .cta-button:hover {
@@ -186,6 +194,30 @@
             color: #2c2c2c;
             transform: translateY(-3px);
             box-shadow: 0 15px 30px rgba(200, 134, 13, 0.3);
+        }
+
+        /* YouTube動画のレスポンシブ対応 */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.8s ease 1.8s forwards;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
         }
 
         /* セクション共通スタイル */
@@ -458,12 +490,39 @@
                 gap: 20px;
             }
             
+            .hero {
+                height: 110vh; /* モバイルでも高さを調整 */
+                padding-top: 80px; /* モバイルでは少し小さく */
+            }
+            
             .hero-title {
                 font-size: 2.2rem;
             }
             
             .hero-subtitle {
                 font-size: 1.1rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+                margin-bottom: 25px;
+            }
+            
+            .video-container {
+                max-width: 95%;
+                margin: 30px auto;
+            }
+            
+            .cta-button {
+                padding: 15px 35px;
+                font-size: 0.9rem;
+                margin-top: 15px;
+            }
+            
+            .hero-content {
+                padding: 0 20px;
+                min-height: calc(60vh - 80px); /* モバイルでのmin-heightを調整 */
+                margin-top: 50px; /* モバイルでも下に配置 */
             }
             
             .experiences-grid {
@@ -512,11 +571,10 @@
             <p class="hero-description">
                 私たちは、画一的なツアーでは満足できない『あなた』のためだけに存在する、プライベート・ツアーの専門家です。<br>
                 お決まりのルートはありません。旅の始まりは、いつもあなたの心の中にあります。
-                <br><br>
-                <div style="display: flex; justify-content: center; margin: 30px 0;">
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/WLIv7HnZ_fE?si=SJtHAqNLxVT02vUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen style="max-width: 100%; height: auto;"></iframe>
-                </div>
             </p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/WLIv7HnZ_fE?si=SJtHAqNLxVT02vUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            </div>
             <a href="#inquiry" class="cta-button">あなたの夢をお聞かせください</a>
         </div>
     </section>
@@ -765,9 +823,15 @@
 
         /* モバイル対応の追加スタイル */
         @media (max-width: 600px) {
+            .hero {
+                height: 105vh; /* より小さな画面でも高さを確保 */
+                padding-top: 70px; /* より小さな画面では更に調整 */
+            }
+            
             .hero-title {
                 font-size: 1.8rem;
                 letter-spacing: 2px;
+                line-height: 1.4;
             }
             
             .hero-subtitle {
@@ -776,11 +840,25 @@
             
             .hero-description {
                 font-size: 0.95rem;
+                line-height: 1.7;
+                margin-bottom: 20px;
+            }
+            
+            .video-container {
+                max-width: 90%;
+                margin: 25px auto;
             }
             
             .cta-button {
                 padding: 15px 30px;
                 font-size: 0.9rem;
+                letter-spacing: 1.5px;
+            }
+            
+            .hero-content {
+                padding: 0 15px;
+                min-height: calc(55vh - 70px); /* より小さな画面での調整 */
+                margin-top: 40px; /* 小さな画面でも適切な間隔 */
             }
             
             .nav-container {
