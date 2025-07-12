@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>あなたのための真心を込めたおもてなし - Your Personal Journey, Crafted with Sincerity</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', 'Yu Gothic', '游ゴシック', YuGothic, sans-serif;
+            line-height: 1.6;
+            color: #2c2c2c;
+            overflow-x: hidden;
+        }
+
+        /* グローバルナビゲーション */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 300;
+            color: #2c2c2c;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #2c2c2c;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #c8860d;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #c8860d;
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                45deg,
+                rgba(26, 26, 26, 0.75),
+                rgba(45, 45, 45, 0.6)
+            );
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            color: white;
+            max-width: 900px;
+            padding: 0 30px;
+        }
+
+        .hero-title {
+            font-size: 3.2rem;
+            font-weight: 100;
+            margin-bottom: 15px;
+            letter-spacing: 3px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.8s ease 0.5s forwards;
+            line-height: 1.3;
+        }
+
+        .hero-title-line1 {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .hero-title-line2 {
+            display: block;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-bottom: 35px;
+            letter-spacing: 2px;
+            opacity: 0.9;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.8s ease 1s forwards;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 45px;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.8s ease 1.5s forwards;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 45px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 45px;
+            background: transparent;
+            border: 2px solid #c8860d;
+            color: #c8860d;
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-weight: 300;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1.8s ease 2s forwards;
+        }
+
+        .cta-button:hover {
+            background: #c8860d;
+            color: #2c2c2c;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(200, 134, 13, 0.3);
+        }
+
+        /* セクション共通スタイル */
+        .section {
+            padding: 100px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 100;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 1px;
+            background: #c8860d;
+        }
+
+        /* エクスペリエンスセクション */
+        .experiences-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 80px;
+            line-height: 1.8;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 80px;
+        }
+
+        .experiences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 80px;
+        }
+
+        .experience-card {
+            position: relative;
+            height: 500px;
+            overflow: hidden;
+            border-radius: 12px;
+            transition: transform 0.4s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .experience-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .experience-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .experience-card:hover .experience-image {
+            transform: scale(1.1);
+        }
+
+        .experience-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 0, 0, 0.8) 100%
+            );
+            display: flex;
+            align-items: flex-end;
+            padding: 35px;
+        }
+
+        .experience-content {
+            color: white;
+        }
+
+        .experience-title {
+            font-size: 1.6rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .experience-description {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            opacity: 0.95;
+        }
+
+        /* 真心セクション */
+        .sincerity {
+            background: linear-gradient(135deg, #f9f9f9, #ffffff);
+        }
+
+        .sincerity-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .sincerity-intro {
+            font-size: 1.3rem;
+            line-height: 1.9;
+            color: #333;
+            margin-bottom: 60px;
+        }
+
+        .sincerity-points {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-top: 60px;
+            text-align: left;
+        }
+
+        .sincerity-point {
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .sincerity-point:hover {
+            transform: translateY(-5px);
+        }
+
+        .sincerity-point h3 {
+            font-size: 1.3rem;
+            font-weight: 400;
+            color: #c8860d;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .sincerity-point p {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* お問い合わせセクション */
+        .inquiry {
+            background: #2c2c2c;
+            color: white;
+        }
+
+        .inquiry .section-title {
+            color: white;
+        }
+
+        .inquiry-intro {
+            text-align: center;
+            font-size: 1.1rem;
+            margin-bottom: 60px;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+
+        .inquiry-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: #ddd;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #555;
+            background: rgba(255, 255, 255, 0.05);
+            color: white;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #c8860d;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-group textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: #c8860d;
+            color: #2c2c2c;
+            border: none;
+            padding: 18px 45px;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            font-weight: 300;
+        }
+
+        .submit-button:hover {
+            background: #a66f0a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(200, 134, 13, 0.3);
+        }
+
+        .inquiry-process {
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid #555;
+            text-align: center;
+            opacity: 0.8;
+        }
+
+        .inquiry-process h3 {
+            margin-bottom: 25px;
+            font-weight: 300;
+            font-size: 1.2rem;
+        }
+
+        .inquiry-process p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* アニメーション */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* レスポンシブ */
+        @media (max-width: 768px) {
+            .nav-menu {
+                gap: 20px;
+            }
+            
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .experiences-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sincerity-points {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .section {
+                padding: 60px 20px;
+            }
+        }
+
+        /* ページ切り替え用のスタイル */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- ナビゲーション -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">真心のおもてなし</a>
+            <ul class="nav-menu">
+                <li><a href="#" onclick="showPage('home')">HOME</a></li>
+                <li><a href="#" onclick="showPage('experiences')">EXPERIENCES</a></li>
+                <li><a href="#" onclick="showPage('sincerity')">OUR SINCERITY</a></li>
+                <li><a href="#" onclick="showPage('inquiry')">INQUIRY</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ホームページ -->
+    <div id="home" class="page active">
+        <section class="hero">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="hero-title-line1">あなたのための</span>
+                    <span class="hero-title-line2">真心を込めたおもてなし</span>
+                </h1>
+                <p class="hero-subtitle">Your Personal Journey, Crafted with Sincerity</p>
+                <p class="hero-description">
+                    私たちは、画一的なツアーでは満足できない『あなた』のためだけに存在する、プライベート・ツアーの専門家です。<br>
+                    お決まりのルートはありません。旅の始まりは、いつもあなたの心の中にあります。
+                    <br><br>
+                    <div style="display: flex; justify-content: center; margin: 30px 0;">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/WLIv7HnZ_fE?si=SJtHAqNLxVT02vUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </p>
+                <a href="#" class="cta-button" onclick="showPage('inquiry')">あなたの夢をお聞かせください</a>
+            </div>
+        </section>
+    </div>
+
+    <!-- エクスペリエンスページ -->
+    <div id="experiences" class="page">
+        <section class="section">
+            <h2 class="section-title">EXPERIENCES</h2>
+            <div class="experiences-intro">
+                ここに掲載するのは、過去にお客様のためだけに創り上げた旅の、ほんの一例です。<br>
+                あなたの旅は、あなたの興味や夢をお聞かせいただくことから始まります。<br>
+                誰一人として同じ旅はありません。
+            </div>
+            
+            <div class="experiences-grid">
+                <div class="experience-card">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMmM0YzU0Ii8+CjxwYXRoIGQ9Ik0xMDAgMjUwQzEyMCAyMzAgMTQwIDIxMCAxNjAgMjAwQzE4MCAyMTAgMjAwIDIzMCAyMjAgMjUwSDEwMFoiIGZpbGw9IiM0ZjY2NmYiLz4KPGJ2ZWN0IHg9IjE1MCIgeT0iMTUwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjM2E1OTYyIi8+CjxyZWN0IHg9IjE2MCIgeT0iMTYwIiB3aWR0aD0iODAiIGhlaWdodD0iNjAiIGZpbGw9IiM1MTc5ODIiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHg9IjE4MCIgeT0iNzAiPgo8Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxNSIgZmlsbD0iI2Y0ZjRmNCIvPgo8L3N2Zz4KPHR0c1dCB4PSIyMDAiIHk9IjEwMCIgZmlsbD0iI2Y0ZjRmNCIgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5aZW4gR2FyZGVuPC90ZXh0Pgo8L3N2Zz4=" class="experience-image" alt="静寂と向き合う旅">
+                    <div class="experience-overlay">
+                        <div class="experience-content">
+                            <h3 class="experience-title">静寂と向き合う旅</h3>
+                            <p class="experience-description">
+                                人里離れた古刹での宿泊、高僧との深い対話、プライベートな座禅体験。
+                                真の静寂の中で、ご自身と向き合う貴重な時間を、あなたのためだけにご用意いたします。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-card">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjNGEzMjI4Ii8+CjxyZWN0IHg9IjEwMCIgeT0iMTUwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzZkNGMzNiIvPgo8cmVjdCB4PSIxNzAiIHk9IjE3MCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjOGY1YzM5Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiNmZjZkMDAiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHg9IjE1MCIgeT0iNTAiPgo8cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNjNGE0NzMiLz4KPC9zdmc+Cjx0ZXh0IHg9IjIwMCIgeT0iNDAiIGZpbGw9IiNmNGY0ZjQiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QXJ0aXNhbiBXb3Jrc2hvcDwvdGV4dD4KPC9zdmc+" class="experience-image" alt="職人の心に触れる旅">
+                    <div class="experience-overlay">
+                        <div class="experience-content">
+                            <h3 class="experience-title">職人の心に触れる旅</h3>
+                            <p class="experience-description">
+                                通常は非公開の工房を訪ね、刀鍛冶や陶芸家から直接手ほどきを受ける。
+                                何世代にもわたって受け継がれた技と精神に、あなたの心で触れていただきます。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="experience-card">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMjg0MDM2Ii8+CjxyZWN0IHg9IjEwMCIgeT0iMTgwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjM2M1YTQ4Ii8+CjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxODAiIHJ4PSI4MCIgcnk9IjQwIiBmaWxsPSIjNWY4MjY3Ii8+CjxjaXJjbGUgY3g9IjE3MCIgY3k9IjE1MCIgcj0iMTUiIGZpbGw9IiNmZmYiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHg9IjMwMCIgeT0iNTAiPgo8cGF0aCBkPSJNMTAgMzBMMzAgMTBMMzAgMzBIMTBaIiBmaWxsPSIjOWNiMGEwIi8+CjwvZy4Kgd4ZXh0IHg9IjIwMCIgeT0iNDAiIGZpbGw9IiNmNGY0ZjQiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+S2Fpc2VraSBEaW5pbmc8L3RleHQ+Cjwvc3ZnPg==" class="experience-image" alt="美食の真髄を味わう旅">
+                    <div class="experience-overlay">
+                        <div class="experience-content">
+                            <h3 class="experience-title">美食の真髄を味わう旅</h3>
+                            <p class="experience-description">
+                                予約困難な料亭のカウンター席、名シェフと巡る築地市場、
+                                老舗酒蔵でのプライベートテイスティング。あなたの感性で日本の美食文化の真髄に迫ります。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 真心ページ -->
+    <div id="sincerity" class="page">
+        <section class="section sincerity">
+            <h2 class="section-title">OUR SINCERITY</h2>
+            <div class="sincerity-content">
+                <div class="sincerity-intro">
+                    私たちの言う「真心」とは、単なる言葉ではありません。<br>
+                    あなたとの出会いから旅の終わりまで、すべての瞬間に込める、具体的な行動です。
+                </div>
+                
+                <div class="sincerity-points">
+                    <div class="sincerity-point">
+                        <h3>真心で「聴く」</h3>
+                        <p>
+                            お客様の言葉はもちろん、その背景にある想いや文化まで深く理解しようと努めます。
+                            表面的なご要望だけでなく、心の奥にある本当の願いを見つけ出すために、
+                            じっくりとお話をお伺いします。
+                        </p>
+                    </div>
+                    
+                    <div class="sincerity-point">
+                        <h3>真心で「創る」</h3>
+                        <p>
+                            その想いを形にするため、私たちの人脈、知識、時間のすべてを注ぎ込み、
+                            唯一無二の旅を設計します。既存のプランに当てはめるのではなく、
+                            あなたのためだけの特別な体験を一から創り上げます。
+                        </p>
+                    </div>
+                    
+                    <div class="sincerity-point">
+                        <h3>真心で「寄り添う」</h3>
+                        <p>
+                            旅の最中、予期せぬ出来事や新たなご要望にも、家族のように親身に対応し、
+                            最高の思い出作りを支えます。あなたの旅が、人生の宝物となるよう、
+                            最後まで責任を持ってお手伝いいたします。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- お問い合わせページ -->
+    <div id="inquiry" class="page">
+        <section class="section inquiry">
+            <h2 class="section-title">INQUIRY</h2>
+            <div class="inquiry-intro">
+                『あなたのための真心を込めたおもてなし』の第一歩は、あなたの声を聞くことから始まります。<br>
+                どんな些細なことでも構いません。まずは、あなたの夢をお聞かせください。
+            </div>
+            
+            <form class="inquiry-form" onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="name">お名前 / Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">メールアドレス / Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">お住まいの国 / Country</label>
+                    <input type="text" id="country" name="country" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="interests">あなたの夢・ご興味 / Your Dreams & Interests for Japan</label>
+                    <textarea id="interests" name="interests" placeholder="日本でどのような体験をされたいか、ご興味のある分野、これまでの旅行で心に残った瞬間など、どんなことでもお気軽にお聞かせください。あなたの想いが、特別な旅の始まりです。" required></textarea>
+                </div>
+                
+                <div style="text-align: center;">
+                    <button type="submit" class="submit-button">真心のおもてなしを始める</button>
+                </div>
+            </form>
+            
+            <div class="inquiry-process">
+                <h3>お問い合わせ後の流れ</h3>
+                <p>1. 24時間以内に心を込めてご返信し、オンライン面談の日程を調整いたします</p>
+                <p>2. あなたのご希望を丁寧にヒアリングさせていただきます</p>
+                <p>3. あなただけの特別なプランを真心を込めてご提案いたします</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // ページ切り替え機能
+        function showPage(pageId) {
+            // すべてのページを非表示
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // 指定されたページを表示
+            document.getElementById(pageId).classList.add('active');
+            
+            // ページトップにスクロール
+            window.scrollTo(0, 0);
+        }
+
+        // スクロール時のナビバー効果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // フォーム送信処理
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // 実際の実装では、ここでサーバーにデータを送信
+            alert('心のこもったお問い合わせをありがとうございます。24時間以内に真心を込めてご返信いたします。');
+            
+            // フォームをリセット
+            event.target.reset();
+        }
+
+        // エクスペリエンスカードのクリック効果
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.experience-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // クリック時の効果（実際の実装では詳細ページに遷移など）
+                    const title = this.querySelector('.experience-title').textContent;
+                    console.log('Experience selected:', title);
+                    
+                    // より具体的な問い合わせページへの誘導
+                    showPage('inquiry');
+                    
+                    // フォームに選択した体験を自動入力
+                    const interestsField = document.getElementById('interests');
+                    if (interestsField.value === '') {
+                        interestsField.value = `「${title}」に興味があります。`;
+                        interestsField.focus();
+                    }
+                });
+            });
+            
+            // 真心ポイントのアニメーション効果
+            const sincerityPoints = document.querySelectorAll('.sincerity-point');
+            
+            // Intersection Observer for fade-in animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            sincerityPoints.forEach(point => {
+                point.style.opacity = '0';
+                point.style.transform = 'translateY(20px)';
+                point.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(point);
+            });
+        });
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // ヒーローセクションのパララックス効果
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            if (hero) {
+                const rate = scrolled * -0.5;
+                hero.style.transform = `translateY(${rate}px)`;
+            }
+        });
+
+        // モバイル対応のハンバーガーメニュー（必要に応じて）
+        function toggleMobileMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            navMenu.classList.toggle('mobile-active');
+        }
+
+        // ページロード時のアニメーション
+        window.addEventListener('load', function() {
+            document.body.style.opacity = '1';
+        });
+    </script>
+
+    <style>
+        /* 追加のアニメーション効果 */
+        body {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* モバイル対応の追加スタイル */
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: 1.8rem;
+                letter-spacing: 2px;
+            }
+            
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+            
+            .hero-description {
+                font-size: 0.95rem;
+            }
+            
+            .cta-button {
+                padding: 15px 30px;
+                font-size: 0.9rem;
+            }
+            
+            .nav-container {
+                padding: 0 15px;
+            }
+            
+            .logo {
+                font-size: 16px;
+            }
+            
+            .nav-menu {
+                gap: 15px;
+            }
+            
+            .nav-menu a {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* フォーカス時の美しいエフェクト */
+        .form-group input:focus,
+        .form-group textarea:focus {
+            box-shadow: 0 0 0 2px rgba(200, 134, 13, 0.2);
+        }
+
+        /* カードホバー時の詳細情報表示 */
+        .experience-card::before {
+            content: 'クリックして詳しく見る';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(200, 134, 13, 0.9);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .experience-card:hover::before {
+            opacity: 1;
+        }
+
+        /* スクロールインジケーター */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(to right, #c8860d, #a66f0a);
+            transform-origin: 0%;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+            z-index: 9999;
+        }
+    </style>
+
+    <!-- スクロールインジケーター -->
+    <div class="scroll-indicator" id="scrollIndicator"></div>
+
+    <script>
+        // スクロールインジケーター
+        window.addEventListener('scroll', function() {
+            const scrollIndicator = document.getElementById('scrollIndicator');
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            scrollIndicator.style.transform = `scaleX(${scrolled / 100})`;
+        });
+    </script>
+</body>
+</html>
