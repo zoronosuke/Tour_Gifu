@@ -189,6 +189,7 @@
         }
 
         .language-toggle {
+            position: relative;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -197,23 +198,167 @@
             letter-spacing: 1px;
         }
 
-        .language-toggle button {
-            background: transparent;
-            border: 1px solid #2c2c2c;
-            color: #2c2c2c;
-            padding: 5px 12px;
+        .language-selector {
+            position: relative;
             cursor: pointer;
-            transition: all 0.3s ease;
-            border-radius: 3px;
-            font-family: inherit;
-            font-size: 0.9rem;
         }
 
-        .language-toggle button:hover,
-        .language-toggle button.active {
+        .language-current {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: transparent;
+            border: 1px solid #2c2c2c;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            font-weight: 300;
+            color: #2c2c2c;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-current:hover {
+            background: #f5f5f5;
+        }
+
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 5px;
+            background: #c8a05a;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            min-width: 180px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1001;
+            display: none;
+        }
+
+        .language-dropdown.active {
+            display: block;
+        }
+
+        .language-dropdown-item {
+            padding: 12px 20px;
+            color: #2c2c2c;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .language-dropdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .language-dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .language-dropdown-item.active {
+            background: rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+        }
+
+        /* カートアイコン */
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            padding: 8px 15px;
+            border: 1px solid #2c2c2c;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cart-icon:hover {
+            background: #f5f5f5;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
             background: #c8860d;
-            border-color: #c8860d;
             color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .cart-badge.hidden {
+            display: none;
+        }
+
+        /* カートバッジアニメーション */
+        @keyframes badgePop {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.3);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .cart-badge.pop {
+            animation: badgePop 0.3s ease;
+        }
+
+        /* トースト通知 */
+        .toast-notification {
+            position: fixed;
+            top: 100px;
+            right: 30px;
+            background: rgba(200, 134, 13, 0.95);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 3000;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95rem;
+            opacity: 0;
+            transform: translateX(400px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast-notification .toast-icon {
+            font-size: 1.3rem;
+        }
+
+        .toast-notification .toast-message {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .toast-notification {
+                top: 80px;
+                right: 15px;
+                left: 15px;
+                font-size: 0.9rem;
+                padding: 12px 20px;
+            }
         }
 
         /* ヒーローセクション */
@@ -864,6 +1009,140 @@
         .back-button:hover {
             color: white;
         }
+
+        /* カートモーダル */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .cart-modal.active {
+            display: block;
+        }
+
+        .cart-items-list {
+            margin-top: 30px;
+        }
+
+        .cart-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .cart-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 300;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-category {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .cart-item-price {
+            color: #c8860d;
+            font-size: 1.1rem;
+            margin: 0 20px;
+        }
+
+        .cart-item-remove {
+            background: rgba(255, 59, 48, 0.8);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .cart-item-remove:hover {
+            background: rgba(255, 59, 48, 1);
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            padding: 60px 20px;
+            font-size: 1.1rem;
+        }
+
+        .cart-actions {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .cart-clear-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .cart-clear-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .cart-checkout-btn {
+            background: #c8860d;
+            color: #2c2c2c;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+
+        .cart-checkout-btn:hover {
+            background: #a66f0a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(200, 134, 13, 0.3);
+        }
+
+        .cart-checkout-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .cart-checkout-btn:disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
     </style>
 </head>
 <body>
@@ -878,8 +1157,35 @@
                     <li><a href="#sincerity">OUR SINCERITY</a></li>
                 </ul>
                 <div class="language-toggle">
-                    <button class="active" onclick="switchLanguage('ja')">日本語</button>
-                    <button onclick="switchLanguage('en')">English</button>
+                    <!-- カートアイコン -->
+                    <div class="cart-icon" onclick="openCart()">
+                        🛒
+                        <span class="cart-badge hidden" id="cartBadge">0</span>
+                    </div>
+                    
+                    <!-- 言語セレクター -->
+                    <div class="language-selector">
+                        <div class="language-current" onclick="toggleLanguageDropdown()">
+                            🌐 <span id="currentLanguage">日本語</span> ▼
+                        </div>
+                        <div class="language-dropdown" id="languageDropdown">
+                            <div class="language-dropdown-item active" onclick="selectLanguage('日本語', 'ja')">日本語</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('English (US)', 'en-us')">English (US)</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('English (UK)', 'en-uk')">English (UK)</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('English (AU)', 'en-au')">English (AU)</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('English (Asia)', 'en-asia')">English (Asia)</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Français', 'fr')">Français</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Italiano', 'it')">Italiano</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Deutsch', 'de')">Deutsch</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Polski', 'pl')">Polski</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Español', 'es')">Español</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Español (LATAM)', 'es-latam')">Español (LATAM)</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('Português do Brasil', 'pt-br')">Português do Brasil</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('繁體中文', 'zh-tw')">繁體中文</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('简体中文', 'zh-cn')">简体中文</div>
+                            <div class="language-dropdown-item" onclick="selectLanguage('한국어', 'ko')">한국어</div>
+                        </div>
+                    </div>
                 </div>
                 <div class="hamburger" onclick="toggleMenu()">
                     <span></span>
@@ -907,6 +1213,12 @@
 
     <!-- メニューオーバーレイ -->
     <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+    <!-- トースト通知 -->
+    <div class="toast-notification" id="toastNotification">
+        <span class="toast-icon">✓</span>
+        <span class="toast-message"></span>
+    </div>
 
     <!-- ホームセクション -->
     <section id="home" class="hero main-section">
@@ -1026,6 +1338,22 @@
         </div>
     </div>
 
+    <!-- カートモーダル -->
+    <div id="cartModal" class="cart-modal">
+        <span class="modal-close" onclick="closeCart()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-inner">
+                <h2 class="modal-title">カート</h2>
+                <div id="cartItemsList" class="cart-items-list">
+                    <!-- カートアイテムがここに表示されます -->
+                </div>
+                <div class="cart-actions" id="cartActions">
+                    <!-- アクションボタンがここに表示されます -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         // ナビバーのスクロール効果
         window.addEventListener('scroll', function() {
@@ -1039,6 +1367,258 @@
 
         // ナビゲーション履歴管理
         let navigationHistory = [];
+
+        // カート管理
+        let cart = [];
+
+        // ローカルストレージからカートを読み込む
+        function loadCart() {
+            const savedCart = localStorage.getItem('tourCart');
+            if (savedCart) {
+                cart = JSON.parse(savedCart);
+                updateCartBadge();
+            }
+        }
+
+        // カートをローカルストレージに保存
+        function saveCart() {
+            localStorage.setItem('tourCart', JSON.stringify(cart));
+            updateCartBadge();
+        }
+
+        // カートバッジを更新
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            if (cart.length > 0) {
+                badge.textContent = cart.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // カートバッジをアニメーション付きで更新
+        function updateCartBadgeWithAnimation() {
+            const badge = document.getElementById('cartBadge');
+            if (cart.length > 0) {
+                badge.textContent = cart.length;
+                badge.classList.remove('hidden');
+                // ポップアニメーション
+                badge.classList.remove('pop');
+                void badge.offsetWidth; // リフロー強制
+                badge.classList.add('pop');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // トースト通知を表示
+        function showToast(message, duration = 3000) {
+            const toast = document.getElementById('toastNotification');
+            const messageEl = toast.querySelector('.toast-message');
+            
+            messageEl.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, duration);
+        }
+
+        // カートにアイテムを追加
+        function addToCart(category, subIndex, itemIndex) {
+            const item = tourData[category].subcategories[subIndex].items[itemIndex];
+            const cartItem = {
+                category: category,
+                categoryTitle: tourData[category].title,
+                subCategory: tourData[category].subcategories[subIndex].name,
+                subIndex: subIndex,
+                itemIndex: itemIndex,
+                name: item.name,
+                price: item.price,
+                description: item.description,
+                image: item.image
+            };
+            
+            // 既にカートにあるかチェック
+            const exists = cart.some(item => 
+                item.category === category && 
+                item.subIndex === subIndex && 
+                item.itemIndex === itemIndex
+            );
+            
+            if (!exists) {
+                cart.push(cartItem);
+                saveCart();
+                
+                // トースト通知を表示
+                showToast(`「${item.name}」をカートに追加しました`);
+                
+                // カートバッジをアニメーション付きで更新
+                updateCartBadgeWithAnimation();
+                
+                // ボタンを一時的に「追加済み」状態にする
+                const buttonId = `cart-btn-${category}-${subIndex}-${itemIndex}`;
+                const button = document.getElementById(buttonId);
+                if (button) {
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '✓ 追加済み';
+                    button.style.background = 'rgba(76, 175, 80, 0.3)';
+                    button.style.borderColor = '#4CAF50';
+                    button.style.color = '#4CAF50';
+                    button.disabled = true;
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                        button.style.background = 'rgba(255, 255, 255, 0.1)';
+                        button.style.borderColor = '#c8860d';
+                        button.style.color = '#fff';
+                        button.disabled = false;
+                    }, 2000);
+                }
+            } else {
+                // 既に追加済みの場合
+                showToast('このアイテムは既にカートに入っています');
+            }
+        }
+
+        // カートに追加してすぐに申し込みフォームを開く
+        function addToCartAndApply(category, subIndex, itemIndex) {
+            const item = tourData[category].subcategories[subIndex].items[itemIndex];
+            const cartItem = {
+                category: category,
+                categoryTitle: tourData[category].title,
+                subCategory: tourData[category].subcategories[subIndex].name,
+                subIndex: subIndex,
+                itemIndex: itemIndex,
+                name: item.name,
+                price: item.price,
+                description: item.description,
+                image: item.image
+            };
+            
+            // 既にカートにあるかチェック
+            const exists = cart.some(item => 
+                item.category === category && 
+                item.subIndex === subIndex && 
+                item.itemIndex === itemIndex
+            );
+            
+            if (!exists) {
+                cart.push(cartItem);
+                saveCart();
+            }
+            
+            // 詳細画面の履歴を保持したまま申し込みフォームを表示
+            navigationHistory.push('detail-form');
+            showInquiryFormWithCart();
+        }
+
+        // カートからアイテムを削除
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            saveCart();
+            renderCart();
+        }
+
+        // カートを空にする
+        function clearCart() {
+            if (confirm('カートを空にしますか?')) {
+                cart = [];
+                saveCart();
+                renderCart();
+            }
+        }
+
+        // カートを開く
+        function openCart() {
+            renderCart();
+            document.getElementById('cartModal').classList.add('active');
+        }
+
+        // カートを閉じる
+        function closeCart() {
+            document.getElementById('cartModal').classList.remove('active');
+        }
+
+        // カートの内容を表示
+        function renderCart() {
+            const cartItemsList = document.getElementById('cartItemsList');
+            const cartActions = document.getElementById('cartActions');
+            
+            if (cart.length === 0) {
+                cartItemsList.innerHTML = '<div class="cart-empty">カートは空です</div>';
+                cartActions.innerHTML = '';
+                return;
+            }
+            
+            let html = '';
+            cart.forEach((item, index) => {
+                html += `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-category">${item.categoryTitle} > ${item.subCategory}</div>
+                        </div>
+                        <div class="cart-item-price">${item.price}</div>
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})">削除</button>
+                    </div>
+                `;
+            });
+            
+            cartItemsList.innerHTML = html;
+            
+            cartActions.innerHTML = `
+                <button class="cart-clear-btn" onclick="clearCart()">カートを空にする</button>
+                <button class="cart-checkout-btn" onclick="checkoutCart()">まとめて申し込む</button>
+            `;
+        }
+
+        // カートの内容で申し込みフォームを開く
+        function checkoutCart() {
+            closeCart();
+            showInquiryFormWithCart();
+        }
+
+        // 言語ドロップダウンの開閉
+        function toggleLanguageDropdown() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        // 言語選択
+        function selectLanguage(languageName, languageCode) {
+            document.getElementById('currentLanguage').textContent = languageName;
+            
+            // すべてのアイテムからactiveを削除
+            document.querySelectorAll('.language-dropdown-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // 選択したアイテムにactiveを追加
+            event.target.classList.add('active');
+            
+            // ドロップダウンを閉じる
+            document.getElementById('languageDropdown').classList.remove('active');
+            
+            console.log('Language switched to:', languageCode);
+            // TODO: 将来的に言語切り替え機能を実装
+        }
+
+        // ドロップダウン外クリックで閉じる
+        document.addEventListener('click', function(e) {
+            const languageSelector = document.querySelector('.language-selector');
+            const dropdown = document.getElementById('languageDropdown');
+            
+            if (languageSelector && !languageSelector.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // ページ読み込み時にカートを読み込む
+        window.addEventListener('load', function() {
+            loadCart();
+        });
 
         // データ構造
         const tourData = {
@@ -1072,7 +1652,9 @@
                         name: 'アクティビティ',
                         items: [
                             { name: '金華山トレッキング', image: 'images/hiking.jpg', price: '¥15,000〜', description: '金華山を登るトレッキング体験' },
-                            { name: '馬籠宿トレッキング', image: 'images/magome.jpg', price: '¥18,000〜', description: '中山道の宿場町、馬籠宿を巡るトレッキング' }
+                            { name: '馬籠宿トレッキング', image: 'images/magome.jpg', price: '¥18,000〜', description: '中山道の宿場町、馬籠宿を巡るトレッキング' },
+                            { name: 'ラフティング', image: 'images/rafting.jpg', price: '¥14,000〜', description: '清流でスリリングなラフティング体験' },
+                            { name: 'キャニオニング', image: 'images/canyoning.jpg', price: '¥16,000〜', description: '渓谷を下るエキサイティングな冒険' }
                         ]
                     },
                     {
@@ -1093,6 +1675,13 @@
                             { name: '田植え', image: 'images/rice-planting.jpg', price: '¥12,000〜', description: '日本の原風景、田植え体験' },
                             { name: 'フルーツ狩り', image: 'images/fruit.jpg', price: '¥10,000〜', description: '季節のフルーツ狩り' }
                         ]
+                    },
+                    {
+                        name: '酒',
+                        items: [
+                            { name: 'ジャパニーズウィスキー蒸留所見学', image: 'images/whiskey-distillery.jpg', price: '¥20,000〜', description: '世界的に評価される日本のウィスキー蒸留所を訪問' },
+                            { name: '酒造見学', image: 'images/sake-brewery.jpg', price: '¥15,000〜', description: '伝統的な日本酒造りの現場を体験' }
+                        ]
                     }
                 ]
             },
@@ -1104,6 +1693,8 @@
                         items: [
                             { name: '焼肉', image: 'images/yakiniku.jpg', price: '¥15,000〜', description: '最高級飛騨牛の焼肉' },
                             { name: 'すき焼き', image: 'images/sukiyaki.jpg', price: '¥18,000〜', description: '飛騨牛のすき焼き' },
+                            { name: 'しゃぶしゃぶ', image: 'images/shabu-shabu.jpg', price: '¥17,000〜', description: '極上飛騨牛のしゃぶしゃぶ' },
+                            { name: 'ステーキ', image: 'images/steak.jpg', price: '¥22,000〜', description: 'A5ランク飛騨牛ステーキ' },
                             { name: '焼鳥', image: 'images/yakitori.jpg', price: '¥12,000〜', description: '地鶏を使った本格焼鳥' }
                         ]
                     },
@@ -1112,7 +1703,8 @@
                         items: [
                             { name: '寿司', image: 'images/sushi.jpg', price: '¥20,000〜', description: '職人が握る極上寿司' },
                             { name: '鮎料理', image: 'images/ayu.jpg', price: '¥18,000〜', description: '清流で育った鮎料理' },
-                            { name: '川魚', image: 'images/river-fish.jpg', price: '¥15,000〜', description: '清流で育った川魚料理' }
+                            { name: 'うなぎ', image: 'images/unagi.jpg', price: '¥16,000〜', description: '伝統のタレで焼き上げる極上うなぎ' },
+                            { name: '和食', image: 'images/washoku.jpg', price: '¥15,000〜', description: '季節の食材を使った本格和食' }
                         ]
                     },
                     {
@@ -1177,13 +1769,19 @@
             const item = tourData[category].subcategories[subIndex].items[itemIndex];
             navigationHistory = ['detail', category, subIndex, itemIndex];
             
+            // ボタンにユニークなIDを付与
+            const buttonId = `cart-btn-${category}-${subIndex}-${itemIndex}`;
+            
             let html = `
                 <div class="detail-view">
                     <img src="${item.image}" class="detail-image" alt="${item.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDgwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI1MDAiIGZpbGw9IiMzYTNhM2EiLz48L3N2Zz4='">
                     <h2 class="detail-title">${item.name}</h2>
                     <p class="detail-description">${item.description}</p>
                     <div class="detail-price">${item.price}</div>
-                    <button class="detail-button" onclick="showInquiryForm()">申し込みフォームへ</button>
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                        <button id="${buttonId}" class="detail-button" style="background: rgba(255, 255, 255, 0.1); border: 1px solid #c8860d; color: #fff;" onclick="addToCart('${category}', ${subIndex}, ${itemIndex})">🛒 カートに追加</button>
+                        <button class="detail-button" onclick="addToCartAndApply('${category}', ${subIndex}, ${itemIndex})">今すぐ申し込む</button>
+                    </div>
                 </div>
             `;
             
@@ -1195,10 +1793,30 @@
         function showInquiryForm() {
             navigationHistory.push('form');
             
+            // 現在の詳細画面のアイテム情報を取得
+            const detailHistory = navigationHistory[navigationHistory.length - 2];
+            let selectedItemsHtml = '';
+            
+            if (detailHistory && detailHistory[0] === 'detail') {
+                const [_, category, subIndex, itemIndex] = detailHistory;
+                const item = tourData[category].subcategories[subIndex].items[itemIndex];
+                selectedItemsHtml = `
+                    <div class="form-group">
+                        <label>選択された体験</label>
+                        <div style="background: rgba(200, 134, 13, 0.1); border: 1px solid #c8860d; border-radius: 5px; padding: 15px; margin-top: 10px;">
+                            <div style="font-size: 1.1rem; font-weight: 400; margin-bottom: 5px;">${item.name}</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.9rem;">${tourData[category].title} > ${tourData[category].subcategories[subIndex].name}</div>
+                            <div style="color: #c8860d; font-size: 1rem; margin-top: 8px;">${item.price}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
             let html = `
                 <div class="detail-view">
                     <h2 class="detail-title">申し込みフォーム</h2>
                     <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+                        ${selectedItemsHtml}
                         <div class="form-group">
                             <label>お名前</label>
                             <input type="text" placeholder="山田 太郎">
@@ -1240,11 +1858,106 @@
             document.getElementById('modalBack').classList.add('show');
         }
 
+        // カートの内容で申し込みフォームを表示
+        function showInquiryFormWithCart() {
+            // ナビゲーション履歴が既にある場合（詳細画面から遷移）は保持
+            // ない場合（カートから遷移）は新規作成
+            const lastItem = navigationHistory[navigationHistory.length - 1];
+            if (navigationHistory.length === 0 || lastItem !== 'detail-form') {
+                navigationHistory = ['cart-form'];
+            }
+            
+            // カート内のアイテムを見やすく表示
+            let selectedItemsHtml = `
+                <div class="form-group">
+                    <label>選択された体験 (${cart.length}件)</label>
+                    <div style="background: rgba(200, 134, 13, 0.1); border: 1px solid #c8860d; border-radius: 5px; padding: 15px; margin-top: 10px; max-height: 300px; overflow-y: auto;">
+            `;
+            
+            cart.forEach((item, index) => {
+                selectedItemsHtml += `
+                    <div style="padding: 12px; ${index > 0 ? 'border-top: 1px solid rgba(255, 255, 255, 0.2); margin-top: 12px; padding-top: 12px;' : ''}">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div style="flex: 1;">
+                                <div style="font-size: 1.05rem; font-weight: 400; margin-bottom: 5px;">${item.name}</div>
+                                <div style="color: rgba(255, 255, 255, 0.7); font-size: 0.85rem;">${item.categoryTitle} > ${item.subCategory}</div>
+                            </div>
+                            <div style="color: #c8860d; font-size: 0.95rem; margin-left: 15px; white-space: nowrap;">${item.price}</div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            selectedItemsHtml += `
+                    </div>
+                </div>
+            `;
+            
+            let html = `
+                <div class="detail-view">
+                    <h2 class="detail-title">申し込みフォーム</h2>
+                    <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+                        ${selectedItemsHtml}
+                        <div class="form-group">
+                            <label>お名前</label>
+                            <input type="text" placeholder="山田 太郎">
+                        </div>
+                        <div class="form-group">
+                            <label>メールアドレス</label>
+                            <input type="email" placeholder="example@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>お住まいの国</label>
+                            <input type="text" placeholder="日本">
+                        </div>
+                        <div class="form-group">
+                            <label>希望日や時間帯</label>
+                            <textarea placeholder="2024年3月15日 午前10時〜&#10;※複数の体験を選択されている場合は、それぞれの希望日時をご記入ください"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>人数（大人）</label>
+                            <input type="number" placeholder="2" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>人数（子供）</label>
+                            <input type="number" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>性別</label>
+                            <input type="text" placeholder="男性・女性・その他">
+                        </div>
+                        <div class="form-group">
+                            <label>アレルギーや宗教的な制限</label>
+                            <textarea placeholder="特になし"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>その他のご要望</label>
+                            <textarea placeholder="体験の順番や時間配分など、ご要望があればお書きください" style="min-height: 100px;"></textarea>
+                        </div>
+                        <button class="detail-button" onclick="submitForm()" style="width: 100%; margin-top: 20px;">送信する（UIのみ）</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modalInner').innerHTML = html;
+            document.getElementById('modal').classList.add('active');
+            document.getElementById('modalBack').classList.add('show');
+        }
+
         // 戻るボタンの処理
         function goBack() {
             const currentPage = navigationHistory[0];
             
-            if (currentPage === 'form') {
+            if (currentPage === 'cart-form') {
+                // カートフォームからカートに戻る
+                closeModal();
+                openCart();
+            } else if (currentPage === 'detail-form') {
+                // 詳細画面からの申し込みフォームの場合、詳細画面に戻る
+                navigationHistory.pop();
+                const [_, category, subIndex, itemIndex] = navigationHistory;
+                openDetail(category, subIndex, itemIndex);
+            } else if (currentPage === 'form') {
                 // フォームから詳細に戻る
                 navigationHistory.pop();
                 const [_, category, subIndex, itemIndex] = navigationHistory;
@@ -1289,17 +2002,6 @@
             sideMenu.classList.toggle('active');
             menuOverlay.classList.toggle('active');
             hamburger.classList.toggle('active');
-        }
-
-        // 言語切り替え（将来的に実装）
-        function switchLanguage(lang) {
-            const buttons = document.querySelectorAll('.language-toggle button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            
-            // 将来的に言語切り替え機能を実装
-            console.log('Language switched to:', lang);
-            alert('言語切り替え機能は将来実装予定です / Language switching feature coming soon');
         }
     </script>
 </body>
