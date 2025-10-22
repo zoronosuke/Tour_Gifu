@@ -89,6 +89,133 @@
             width: 100%;
         }
 
+        /* ハンバーガーメニュー */
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: #2c2c2c;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: -300px;
+            width: 300px;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            z-index: 2000;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .side-menu.active {
+            left: 0;
+        }
+
+        .side-menu-header {
+            padding: 30px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .side-menu-close {
+            font-size: 30px;
+            cursor: pointer;
+            color: #2c2c2c;
+        }
+
+        .side-menu-list {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .side-menu-list li {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .side-menu-list a {
+            display: block;
+            padding: 20px 30px;
+            color: #2c2c2c;
+            text-decoration: none;
+            font-weight: 300;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .side-menu-list a:hover {
+            background: #f9f9f9;
+            color: #c8860d;
+            padding-left: 40px;
+        }
+
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .menu-overlay.active {
+            display: block;
+        }
+
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .language-toggle button {
+            background: transparent;
+            border: 1px solid #2c2c2c;
+            color: #2c2c2c;
+            padding: 5px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .language-toggle button:hover,
+        .language-toggle button.active {
+            background: #c8860d;
+            border-color: #c8860d;
+            color: white;
+        }
+
         /* ヒーローセクション */
         .hero {
             height: 140vh; /* 高さを増やしてコンテンツがかぶらないように */
@@ -484,10 +611,23 @@
             }
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
         /* レスポンシブ */
         @media (max-width: 768px) {
             .nav-menu {
-                gap: 20px;
+                display: none;
+            }
+
+            .language-toggle {
+                display: none;
             }
             
             .hero {
@@ -543,6 +683,187 @@
         .main-section {
             scroll-margin-top: 100px; /* ナビバーの高さ分のオフセット */
         }
+
+        /* モーダルスタイル */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            overflow-y: auto;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: block;
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            z-index: 2001;
+            transition: transform 0.3s ease;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-back {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            z-index: 2001;
+            transition: transform 0.3s ease;
+            display: none;
+        }
+
+        .modal-back.show {
+            display: block;
+        }
+
+        .modal-back:hover {
+            transform: translateX(-5px);
+        }
+
+        .modal-content {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 30px 50px;
+        }
+
+        .modal-inner {
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .modal-title {
+            font-size: 3rem;
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+            letter-spacing: 3px;
+            font-weight: 100;
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .modal-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .modal-card:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-5px);
+            border-color: #c8860d;
+        }
+
+        .modal-card h3 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .modal-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .detail-view {
+            color: white;
+            text-align: center;
+        }
+
+        .detail-image {
+            width: 100%;
+            max-width: 800px;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin: 0 auto 40px;
+            display: block;
+        }
+
+        .detail-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        .detail-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .detail-price {
+            font-size: 2rem;
+            color: #c8860d;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .detail-button {
+            display: inline-block;
+            padding: 18px 50px;
+            background: #c8860d;
+            color: #2c2c2c;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: 300;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .detail-button:hover {
+            background: #a66f0a;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(200, 134, 13, 0.3);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 30px;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-button:hover {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -550,14 +871,42 @@
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#home" class="logo">真心のおもてなし</a>
-            <ul class="nav-menu">
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#experiences">EXPERIENCES</a></li>
-                <li><a href="#sincerity">OUR SINCERITY</a></li>
-                <li><a href="#inquiry">INQUIRY</a></li>
-            </ul>
+            <div style="display: flex; align-items: center; gap: 30px;">
+                <ul class="nav-menu">
+                    <li><a href="#home">HOME</a></li>
+                    <li><a href="#experiences">EXPERIENCES</a></li>
+                    <li><a href="#sincerity">OUR SINCERITY</a></li>
+                </ul>
+                <div class="language-toggle">
+                    <button class="active" onclick="switchLanguage('ja')">日本語</button>
+                    <button onclick="switchLanguage('en')">English</button>
+                </div>
+                <div class="hamburger" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
     </nav>
+
+    <!-- サイドメニュー -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu-header">
+            <span style="font-weight: 300; letter-spacing: 1px;">MENU</span>
+            <span class="side-menu-close" onclick="toggleMenu()">&times;</span>
+        </div>
+        <ul class="side-menu-list">
+            <li><a href="#home" onclick="toggleMenu()">HOME</a></li>
+            <li><a href="#about" onclick="toggleMenu()">ABOUT US（運営者情報）</a></li>
+            <li><a href="#faq" onclick="toggleMenu()">FAQ（よくある質問）</a></li>
+            <li><a href="#testimonials" onclick="toggleMenu()">TESTIMONIALS（お客様の声）</a></li>
+            <li><a href="#inquiry" onclick="toggleMenu()">INQUIRY（お問い合わせ）</a></li>
+        </ul>
+    </div>
+
+    <!-- メニューオーバーレイ -->
+    <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
 
     <!-- ホームセクション -->
     <section id="home" class="hero main-section">
@@ -575,7 +924,6 @@
             <div class="video-container">
                 <iframe src="https://www.youtube.com/embed/WLIv7HnZ_fE?si=SJtHAqNLxVT02vUK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
             </div>
-            <a href="#inquiry" class="cta-button">あなたの夢をお聞かせください</a>
         </div>
     </section>
 
@@ -588,48 +936,44 @@
             誰一人として同じ旅はありません。
         </div>
             
-            <div class="experiences-grid">
-                <div class="experience-card">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMmM0YzU0Ii8+CjxwYXRoIGQ9Ik0xMDAgMjUwQzEyMCAyMzAgMTQwIDIxMCAxNjAgMjAwQzE4MCAyMTAgMjAwIDIzMCAyMjAgMjUwSDEwMFoiIGZpbGw9IiM0ZjY2NmYiLz4KPGJ2ZWN0IHg9IjE1MCIgeT0iMTUwIiB3aWR0aD0iMTAwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjM2E1OTYyIi8+CjxyZWN0IHg9IjE2MCIgeT0iMTYwIiB3aWR0aD0iODAiIGhlaWdodD0iNjAiIGZpbGw9IiM1MTc5ODIiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHg9IjE4MCIgeT0iNzAiPgo8Y2lyY2xlIGN4PSIyMCIgY3k9IjIwIiByPSIxNSIgZmlsbD0iI2Y0ZjRmNCIvPgo8L3N2Zz4KPHR0c1dCB4PSIyMDAiIHk9IjEwMCIgZmlsbD0iI2Y0ZjRmNCIgZm9udC1mYW1pbHk9InNlcmlmIiBmb250LXNpemU9IjE0IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIj5aZW4gR2FyZGVuPC90ZXh0Pgo8L3N2Zz4=" class="experience-image" alt="静寂と向き合う旅">
-                    <div class="experience-overlay">
-                        <div class="experience-content">
-                            <h3 class="experience-title">静寂と向き合う旅</h3>
-                            <p class="experience-description">
-                                人里離れた古刹での宿泊、高僧との深い対話、プライベートな座禅体験。
-                                真の静寂の中で、ご自身と向き合う貴重な時間を、あなたのためだけにご用意いたします。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="experience-card">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjNGEzMjI4Ii8+CjxyZWN0IHg9IjEwMCIgeT0iMTUwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzZkNGMzNiIvPgo8cmVjdCB4PSIxNzAiIHk9IjE3MCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjOGY1YzM5Ii8+CjxjaXJjbGUgY3g9IjIwMCIgY3k9IjEwMCIgcj0iMzAiIGZpbGw9IiNmZjZkMDAiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHg9IjE1MCIgeT0iNTAiPgo8cmVjdCB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIGZpbGw9IiNjNGE0NzMiLz4KPC9zdmc+Cjx0ZXh0IHg9IjIwMCIgeT0iNDAiIGZpbGw9IiNmNGY0ZjQiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+QXJ0aXNhbiBXb3Jrc2hvcDwvdGV4dD4KPC9zdmc+" class="experience-image" alt="職人の心に触れる旅">
-                    <div class="experience-overlay">
-                        <div class="experience-content">
-                            <h3 class="experience-title">職人の心に触れる旅</h3>
-                            <p class="experience-description">
-                                通常は非公開の工房を訪ね、刀鍛冶や陶芸家から直接手ほどきを受ける。
-                                何世代にもわたって受け継がれた技と精神に、あなたの心で触れていただきます。
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="experience-card">
-                    <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjMjg0MDM2Ii8+CjxyZWN0IHg9IjEwMCIgeT0iMTgwIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjM2M1YTQ4Ii8+CjxlbGxpcHNlIGN4PSIyMDAiIGN5PSIxODAiIHJ4PSI4MCIgcnk9IjQwIiBmaWxsPSIjNWY4MjY3Ii8+CjxjaXJjbGUgY3g9IjE3MCIgY3k9IjE1MCIgcj0iMTUiIGZpbGw9IiNmZmYiLz4KPHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHg9IjMwMCIgeT0iNTAiPgo8cGF0aCBkPSJNMTAgMzBMMzAgMTBMMzAgMzBIMTBaIiBmaWxsPSIjOWNiMGEwIi8+CjwvZy4Kgd4ZXh0IHg9IjIwMCIgeT0iNDAiIGZpbGw9IiNmNGY0ZjQiIGZvbnQtZmFtaWx5PSJzZXJpZiIgZm9udC1zaXplPSIxNCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+S2Fpc2VraSBEaW5pbmc8L3RleHQ+Cjwvc3ZnPg==" class="experience-image" alt="美食の真髄を味わう旅">
-                    <div class="experience-overlay">
-                        <div class="experience-content">
-                            <h3 class="experience-title">美食の真髄を味わう旅</h3>
-                            <p class="experience-description">
-                                予約困難な料亭のカウンター席、名シェフと巡る築地市場、
-                                老舗酒蔵でのプライベートテイスティング。あなたの感性で日本の美食文化の真髄に迫ります。
-                            </p>
-                        </div>
+        <div class="experiences-grid">
+            <div class="experience-card" onclick="openCategory('tourism')">
+                <img src="images/tourism.jpg" class="experience-image" alt="観光" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMyYzRjNTQiLz48L3N2Zz4='">
+                <div class="experience-overlay">
+                    <div class="experience-content">
+                        <h3 class="experience-title">観光</h3>
+                        <p class="experience-description">
+                            岐阜の美しい自然と歴史的な名所を巡る特別な旅をご提案します。
+                        </p>
                     </div>
                 </div>
             </div>
-        </section>
-    </div>
+
+            <div class="experience-card" onclick="openCategory('experience')">
+                <img src="images/experience.jpg" class="experience-image" alt="体験" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiM0YTMyMjgiLz48L3N2Zz4='">
+                <div class="experience-overlay">
+                    <div class="experience-content">
+                        <h3 class="experience-title">体験</h3>
+                        <p class="experience-description">
+                            伝統文化やアクティビティを通じて、岐阜の魅力を体感してください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="experience-card" onclick="openCategory('gourmet')">
+                <img src="images/gourmet.jpg" class="experience-image" alt="グルメ" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjQwMCIgaGVpZ2h0PSIzMDAiIGZpbGw9IiMyODQwMzYiLz48L3N2Zz4='">
+                <div class="experience-overlay">
+                    <div class="experience-content">
+                        <h3 class="experience-title">グルメ</h3>
+                        <p class="experience-description">
+                            岐阜の美食を堪能する、贅沢なグルメ体験をお楽しみください。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- 真心セクション -->
     <section id="sincerity" class="section sincerity main-section">
@@ -671,264 +1015,292 @@
             </div>
         </section>
 
-    <!-- お問い合わせセクション -->
-    <section id="inquiry" class="section inquiry main-section">
-            <h2 class="section-title">INQUIRY</h2>
-            <div class="inquiry-intro">
-                『あなたのための真心を込めたおもてなし』の第一歩は、あなたの声を聞くことから始まります。<br>
-                どんな些細なことでも構いません。まずは、あなたの夢をお聞かせください。
+    <!-- モーダル -->
+    <div id="modal" class="modal">
+        <span class="modal-back" id="modalBack" onclick="goBack()">←</span>
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+            <div class="modal-inner" id="modalInner">
+                <!-- JavaScriptで動的に内容を変更 -->
             </div>
-            
-            <form class="inquiry-form" onsubmit="handleSubmit(event)">
-                <div class="form-group">
-                    <label for="name">お名前 / Name</label>
-                    <input type="text" id="name" name="name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">メールアドレス / Email</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="country">お住まいの国 / Country</label>
-                    <input type="text" id="country" name="country" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="interests">あなたの夢・ご興味 / Your Dreams & Interests for Japan</label>
-                    <textarea id="interests" name="interests" placeholder="日本でどのような体験をされたいか、ご興味のある分野、これまでの旅行で心に残った瞬間など、どんなことでもお気軽にお聞かせください。あなたの想いが、特別な旅の始まりです。" required></textarea>
-                </div>
-                
-                <div style="text-align: center;">
-                    <button type="submit" class="submit-button">真心のおもてなしを始める</button>
-                </div>
-            </form>
-            
-            <div class="inquiry-process">
-                <h3>お問い合わせ後の流れ</h3>
-                <p>1. 24時間以内に心を込めてご返信し、オンライン面談の日程を調整いたします</p>
-                <p>2. あなたのご希望を丁寧にヒアリングさせていただきます</p>
-                <p>3. あなただけの特別なプランを真心を込めてご提案いたします</p>
-            </div>
-        </section>
+        </div>
+    </div>
 
     <script>
-        // スクロール時のナビバー効果
+        // ナビバーのスクロール効果
         window.addEventListener('scroll', function() {
             const navbar = document.getElementById('navbar');
-            if (window.scrollY > 100) {
+            if (window.scrollY > 50) {
                 navbar.classList.add('scrolled');
             } else {
                 navbar.classList.remove('scrolled');
             }
         });
 
-        // フォーム送信処理
-        function handleSubmit(event) {
-            event.preventDefault();
-            
-            // 実際の実装では、ここでサーバーにデータを送信
-            alert('心のこもったお問い合わせをありがとうございます。24時間以内に真心を込めてご返信いたします。');
-            
-            // フォームをリセット
-            event.target.reset();
-        }
+        // ナビゲーション履歴管理
+        let navigationHistory = [];
 
-        // エクスペリエンスカードのクリック効果
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.experience-card');
-            cards.forEach(card => {
-                card.addEventListener('click', function() {
-                    // クリック時の効果（実際の実装では詳細ページに遷移など）
-                    const title = this.querySelector('.experience-title').textContent;
-                    console.log('Experience selected:', title);
-                    
-                    // より具体的な問い合わせページへの誘導
-                    document.getElementById('inquiry').scrollIntoView({ behavior: 'smooth' });
-                    
-                    // フォームに選択した体験を自動入力
-                    const interestsField = document.getElementById('interests');
-                    if (interestsField.value === '') {
-                        interestsField.value = `「${title}」に興味があります。`;
-                        interestsField.focus();
+        // データ構造
+        const tourData = {
+            tourism: {
+                title: '観光',
+                subcategories: [
+                    {
+                        name: '自然',
+                        items: [
+                            { name: '穂高岳', image: 'images/hotaka.jpg', price: '¥30,000〜', description: '北アルプスの名峰、穂高岳を巡る特別なツアー' },
+                            { name: '伊吹山', image: 'images/ibuki.jpg', price: '¥20,000〜', description: '標高1,377mの伊吹山登山ツアー' },
+                            { name: '洞窟', image: 'images/cave.jpg', price: '¥15,000〜', description: '神秘的な洞窟探検' },
+                            { name: '花火大会', image: 'images/fireworks-event.jpg', price: '¥25,000〜', description: '岐阜の夏を彩る壮大な花火大会' }
+                        ]
+                    },
+                    {
+                        name: '歴史・文化',
+                        items: [
+                            { name: '金華山', image: 'images/kinka.jpg', price: '¥18,000〜', description: '岐阜城のある金華山ツアー' },
+                            { name: '関ヶ原', image: 'images/sekigahara.jpg', price: '¥22,000〜', description: '歴史の舞台、関ヶ原を訪ねる' },
+                            { name: '神社', image: 'images/shrine.jpg', price: '¥16,000〜', description: '歴史ある神社巡り' },
+                            { name: '鵜飼', image: 'images/ukai.jpg', price: '¥28,000〜', description: '長良川の伝統的な鵜飼観覧' }
+                        ]
                     }
-                });
-            });
-            
-            // 真心ポイントのアニメーション効果
-            const sincerityPoints = document.querySelectorAll('.sincerity-point');
-            
-            // Intersection Observer for fade-in animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
+                ]
+            },
+            experience: {
+                title: '体験',
+                subcategories: [
+                    {
+                        name: 'アクティビティ',
+                        items: [
+                            { name: '金華山トレッキング', image: 'images/hiking.jpg', price: '¥15,000〜', description: '金華山を登るトレッキング体験' },
+                            { name: '馬籠宿トレッキング', image: 'images/magome.jpg', price: '¥18,000〜', description: '中山道の宿場町、馬籠宿を巡るトレッキング' }
+                        ]
+                    },
+                    {
+                        name: '伝統',
+                        items: [
+                            { name: '茶道', image: 'images/tea.jpg', price: '¥12,000〜', description: '本格的な茶道体験' },
+                            { name: '座禅', image: 'images/zazen.jpg', price: '¥10,000〜', description: '静寂の中での座禅体験' },
+                            { name: '刀鍛冶', image: 'images/katana.jpg', price: '¥35,000〜', description: '伝統的な刀鍛冶見学・体験' },
+                            { name: '花火作り', image: 'images/fireworks.jpg', price: '¥20,000〜', description: '職人と一緒に花火作り' },
+                            { name: '傘・提灯作り', image: 'images/lantern.jpg', price: '¥15,000〜', description: '伝統工芸の和傘・提灯作り' },
+                            { name: '屋形船', image: 'images/yakatabune.jpg', price: '¥25,000〜', description: '優雅な屋形船体験' }
+                        ]
+                    },
+                    {
+                        name: '旬',
+                        items: [
+                            { name: 'キノコ狩り', image: 'images/mushroom.jpg', price: '¥10,000〜', description: '秋のキノコ狩り体験' },
+                            { name: '田植え', image: 'images/rice-planting.jpg', price: '¥12,000〜', description: '日本の原風景、田植え体験' },
+                            { name: 'フルーツ狩り', image: 'images/fruit.jpg', price: '¥10,000〜', description: '季節のフルーツ狩り' }
+                        ]
                     }
-                });
-            }, {
-                threshold: 0.1
+                ]
+            },
+            gourmet: {
+                title: 'グルメ',
+                subcategories: [
+                    {
+                        name: '肉',
+                        items: [
+                            { name: '焼肉', image: 'images/yakiniku.jpg', price: '¥15,000〜', description: '最高級飛騨牛の焼肉' },
+                            { name: 'すき焼き', image: 'images/sukiyaki.jpg', price: '¥18,000〜', description: '飛騨牛のすき焼き' },
+                            { name: '焼鳥', image: 'images/yakitori.jpg', price: '¥12,000〜', description: '地鶏を使った本格焼鳥' }
+                        ]
+                    },
+                    {
+                        name: '魚',
+                        items: [
+                            { name: '寿司', image: 'images/sushi.jpg', price: '¥20,000〜', description: '職人が握る極上寿司' },
+                            { name: '鮎料理', image: 'images/ayu.jpg', price: '¥18,000〜', description: '清流で育った鮎料理' },
+                            { name: '川魚', image: 'images/river-fish.jpg', price: '¥15,000〜', description: '清流で育った川魚料理' }
+                        ]
+                    },
+                    {
+                        name: '懐石料理',
+                        items: [
+                            { name: '懐石料理', image: 'images/kaiseki.jpg', price: '¥25,000〜', description: '四季を感じる本格懐石' }
+                        ]
+                    }
+                ]
+            }
+        };
+
+        // カテゴリーを開く
+        function openCategory(category) {
+            const data = tourData[category];
+            navigationHistory = ['category', category];
+            
+            let html = `<h2 class="modal-title">${data.title}</h2>`;
+            html += '<div class="modal-grid">';
+            
+            data.subcategories.forEach((sub, index) => {
+                html += `
+                    <div class="modal-card" onclick="openSubcategory('${category}', ${index})">
+                        <h3>${sub.name}</h3>
+                        <p>${sub.items.length}つの体験</p>
+                    </div>
+                `;
             });
             
-            sincerityPoints.forEach(point => {
-                point.style.opacity = '0';
-                point.style.transform = 'translateY(20px)';
-                point.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(point);
+            html += '</div>';
+            document.getElementById('modalInner').innerHTML = html;
+            document.getElementById('modal').classList.add('active');
+            document.getElementById('modalBack').classList.add('show');
+        }
+
+        // サブカテゴリーを開く
+        function openSubcategory(category, subIndex) {
+            const data = tourData[category];
+            const sub = data.subcategories[subIndex];
+            navigationHistory = ['subcategory', category, subIndex];
+            
+            let html = `<h2 class="modal-title">${sub.name}</h2>`;
+            html += '<div class="modal-grid">';
+            
+            sub.items.forEach((item, itemIndex) => {
+                html += `
+                    <div class="modal-card" onclick="openDetail('${category}', ${subIndex}, ${itemIndex})">
+                        <h3>${item.name}</h3>
+                        <p>${item.price}</p>
+                    </div>
+                `;
             });
+            
+            html += '</div>';
+            
+            document.getElementById('modalInner').innerHTML = html;
+            document.getElementById('modalBack').classList.add('show');
+        }
+
+        // 詳細を開く
+        function openDetail(category, subIndex, itemIndex) {
+            const item = tourData[category].subcategories[subIndex].items[itemIndex];
+            navigationHistory = ['detail', category, subIndex, itemIndex];
+            
+            let html = `
+                <div class="detail-view">
+                    <img src="${item.image}" class="detail-image" alt="${item.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDgwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjgwMCIgaGVpZ2h0PSI1MDAiIGZpbGw9IiMzYTNhM2EiLz48L3N2Zz4='">
+                    <h2 class="detail-title">${item.name}</h2>
+                    <p class="detail-description">${item.description}</p>
+                    <div class="detail-price">${item.price}</div>
+                    <button class="detail-button" onclick="showInquiryForm()">申し込みフォームへ</button>
+                </div>
+            `;
+            
+            document.getElementById('modalInner').innerHTML = html;
+            document.getElementById('modalBack').classList.add('show');
+        }
+
+        // 申し込みフォームを表示
+        function showInquiryForm() {
+            navigationHistory.push('form');
+            
+            let html = `
+                <div class="detail-view">
+                    <h2 class="detail-title">申し込みフォーム</h2>
+                    <div style="max-width: 600px; margin: 0 auto; text-align: left;">
+                        <div class="form-group">
+                            <label>お名前</label>
+                            <input type="text" placeholder="山田 太郎">
+                        </div>
+                        <div class="form-group">
+                            <label>メールアドレス</label>
+                            <input type="email" placeholder="example@email.com">
+                        </div>
+                        <div class="form-group">
+                            <label>お住まいの国</label>
+                            <input type="text" placeholder="日本">
+                        </div>
+                        <div class="form-group">
+                            <label>希望日や時間帯</label>
+                            <textarea placeholder="2024年3月15日 午前10時〜"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>人数（大人）</label>
+                            <input type="number" placeholder="2" min="1">
+                        </div>
+                        <div class="form-group">
+                            <label>人数（子供）</label>
+                            <input type="number" placeholder="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>性別</label>
+                            <input type="text" placeholder="男性・女性・その他">
+                        </div>
+                        <div class="form-group">
+                            <label>アレルギーや宗教的な制限</label>
+                            <textarea placeholder="特になし"></textarea>
+                        </div>
+                        <button class="detail-button" onclick="submitForm()" style="width: 100%; margin-top: 20px;">送信する（UIのみ）</button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('modalInner').innerHTML = html;
+            document.getElementById('modalBack').classList.add('show');
+        }
+
+        // 戻るボタンの処理
+        function goBack() {
+            const currentPage = navigationHistory[0];
+            
+            if (currentPage === 'form') {
+                // フォームから詳細に戻る
+                navigationHistory.pop();
+                const [_, category, subIndex, itemIndex] = navigationHistory;
+                openDetail(category, subIndex, itemIndex);
+            } else if (currentPage === 'detail') {
+                // 詳細からサブカテゴリーに戻る
+                const [_, category, subIndex] = navigationHistory;
+                openSubcategory(category, subIndex);
+            } else if (currentPage === 'subcategory') {
+                // サブカテゴリーからカテゴリーに戻る
+                const [_, category] = navigationHistory;
+                openCategory(category);
+            } else if (currentPage === 'category') {
+                // カテゴリーからモーダルを閉じる
+                closeModal();
+            }
+        }
+
+        // フォーム送信（UIのみ）
+        function submitForm() {
+            alert('お申し込みありがとうございます！\n（※これはUIのデモです。実際の送信機能は実装されていません）');
+        }
+
+        // モーダルを閉じる
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // モーダル外クリックで閉じる
+        document.getElementById('modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
         });
 
-        // スムーズスクロール
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // ヒーローセクションのパララックス効果
-        window.addEventListener('scroll', function() {
-            const scrolled = window.pageYOffset;
-            const hero = document.querySelector('.hero');
-            if (hero) {
-                const rate = scrolled * -0.5;
-                hero.style.transform = `translateY(${rate}px)`;
-            }
-        });
-
-        // モバイル対応のハンバーガーメニュー（必要に応じて）
-        function toggleMobileMenu() {
-            const navMenu = document.querySelector('.nav-menu');
-            navMenu.classList.toggle('mobile-active');
+        // ハンバーガーメニューの開閉
+        function toggleMenu() {
+            const sideMenu = document.getElementById('sideMenu');
+            const menuOverlay = document.getElementById('menuOverlay');
+            const hamburger = document.querySelector('.hamburger');
+            
+            sideMenu.classList.toggle('active');
+            menuOverlay.classList.toggle('active');
+            hamburger.classList.toggle('active');
         }
 
-        // ページロード時のアニメーション
-        window.addEventListener('load', function() {
-            document.body.style.opacity = '1';
-        });
-    </script>
-
-    <style>
-        /* 追加のアニメーション効果 */
-        body {
-            opacity: 0;
-            transition: opacity 0.3s ease;
+        // 言語切り替え（将来的に実装）
+        function switchLanguage(lang) {
+            const buttons = document.querySelectorAll('.language-toggle button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // 将来的に言語切り替え機能を実装
+            console.log('Language switched to:', lang);
+            alert('言語切り替え機能は将来実装予定です / Language switching feature coming soon');
         }
-
-        /* モバイル対応の追加スタイル */
-        @media (max-width: 600px) {
-            .hero {
-                height: 105vh; /* より小さな画面でも高さを確保 */
-                padding-top: 70px; /* より小さな画面では更に調整 */
-            }
-            
-            .hero-title {
-                font-size: 1.8rem;
-                letter-spacing: 2px;
-                line-height: 1.4;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-            
-            .hero-description {
-                font-size: 0.95rem;
-                line-height: 1.7;
-                margin-bottom: 20px;
-            }
-            
-            .video-container {
-                max-width: 90%;
-                margin: 25px auto;
-            }
-            
-            .cta-button {
-                padding: 15px 30px;
-                font-size: 0.9rem;
-                letter-spacing: 1.5px;
-            }
-            
-            .hero-content {
-                padding: 0 15px;
-                min-height: calc(55vh - 70px); /* より小さな画面での調整 */
-                margin-top: 40px; /* 小さな画面でも適切な間隔 */
-            }
-            
-            .nav-container {
-                padding: 0 15px;
-            }
-            
-            .logo {
-                font-size: 16px;
-            }
-            
-            .nav-menu {
-                gap: 15px;
-            }
-            
-            .nav-menu a {
-                font-size: 0.9rem;
-            }
-        }
-
-        /* フォーカス時の美しいエフェクト */
-        .form-group input:focus,
-        .form-group textarea:focus {
-            box-shadow: 0 0 0 2px rgba(200, 134, 13, 0.2);
-        }
-
-        /* カードホバー時の詳細情報表示 */
-        .experience-card::before {
-            content: 'クリックして詳しく見る';
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(200, 134, 13, 0.9);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .experience-card:hover::before {
-            opacity: 1;
-        }
-
-        /* スクロールインジケーター */
-        .scroll-indicator {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(to right, #c8860d, #a66f0a);
-            transform-origin: 0%;
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-            z-index: 9999;
-        }
-    </style>
-
-    <!-- スクロールインジケーター -->
-    <div class="scroll-indicator" id="scrollIndicator"></div>
-
-    <script>
-        // スクロールインジケーター
-        window.addEventListener('scroll', function() {
-            const scrollIndicator = document.getElementById('scrollIndicator');
-            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            scrollIndicator.style.transform = `scaleX(${scrolled / 100})`;
-        });
     </script>
 </body>
 </html>
